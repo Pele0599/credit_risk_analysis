@@ -1,0 +1,13 @@
+
+for a symbolic regressor, these are some of the parameters which are important
+to remember, and also their significance:
+
+- population_size = number of initial trees, which can be used for mutation and crossover
+- generations = number of generations we run the program for 
+- p_crossover = probability that two trees form together, and create a new offspring 
+- p_mutation = probability of mutating a node inside a tree
+- function_set = different functions we can use in symbolic regression, for example
+sqrt, exp, tanh, sin, cos, add, sub, div, mult,
+- parsimony_coefficient = increases the loss, by penalizing longer terms in the final output
+
+

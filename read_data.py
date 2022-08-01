@@ -1,6 +1,8 @@
 import pandas as pd 
 import numpy as np 
-def get_data(datapath,normalize_data=True):
+
+def get_data_neural_network(datapath,normalize_data=True):
+
     data = pd.read_csv(datapath)
     if normalize_data:
         y = data.pop('Bankrupt?')
@@ -16,19 +18,24 @@ def get_data(datapath,normalize_data=True):
         return normalized_df, y2d
     return data
 
+def get_data_single_outpu(datapath, normalize_data = True):
+    data = pd.read_csv(datapath)
+    if normalize_data:
+        y = data.pop('Bankrupt?')
+        normalized_df=(data-data.mean())/data.std()
+        return normalized_df, y
+    return data
+
 def get_data_with_synthetic(datapath, n_synthetic_data):
     data = pd.read_csv(datapath)
     bankruptcy_rows = data[data['Bankrupt?'] == 1]
     print(bankruptcy_rows.mean())
     print(bankruptcy_rows.std())
     for i in range(n_synthetic_data):
-
         data = pd.concat([data, bankruptcy_rows], axis=0)
     return data 
 
-    
 
-    
 
 # datapath = '/Users/paolovincenzofreieslebendeblasio/finpack/data/data_company_bankruptcies.csv'
 # print(add_synthetic_data(datapath,5))
