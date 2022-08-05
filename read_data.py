@@ -1,8 +1,10 @@
 import pandas as pd 
 import numpy as np 
-
+import category_encoders as ce
 def get_data_neural_network(datapath,normalize_data=True):
-
+    '''
+        Gets bankruptcy data for different 
+    '''
     data = pd.read_csv(datapath)
     if normalize_data:
         y = data.pop('Bankrupt?')
@@ -35,6 +37,19 @@ def get_data_with_synthetic(datapath, n_synthetic_data):
         data = pd.concat([data, bankruptcy_rows], axis=0)
     return data 
 
+def get_credit_card_data_single_output(datapath, normalize_data = True):
+    data = pd.read_csv(datapath)
+    if normalize_data:
+        y = data.pop('credit.policy')
+        purpose = data.pop('purpose')
+        ce_OHE = ce.OneHotEncoder(cols=['purpose'])
+        purpose_OHE = ce_OHE.fit_transform(purpose) 
+        # Transform categorical variables
+        # Using one hot encoding 
+        normalized_df=(data-data.mean())/data.std()
+        X_df = pd.concat([normalized_df,purpose_OHE],axis = 1)
+        return X_df, y
+    return data
 
 
 # datapath = '/Users/paolovincenzofreieslebendeblasio/finpack/data/data_company_bankruptcies.csv'
