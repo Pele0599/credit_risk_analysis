@@ -9,16 +9,16 @@ from data.datapaths import datapaths
 from read_data import *
 from models.symbolic_regression.gplearn import save_gplearn_model_pkl, get_params_from_best_model
 hyper_params = []
-pars_coeff_init = 0.1
-pars_coeffs = [0.01, 0.001, 0.0001, 0.00001]
+pars_coeff_init = 0.0001
+pars_coeffs = []#[0.01, 0.001, 0.0001, 0.00001]
 random_state_data  = 42
 
 random_state_models = 42
 function_set = ('add', 'sub', 'mul', 'div', 'log','sqrt')
 
-populations = [15, 30, 45]
-generations = [50, 40, 30]
-for p, g in zip(populations, generations):#zip([1000,3000,5000],[5000,1500,1000]):
+populations = [1500,3000,5000]
+generations = [5000,3000,2000]
+for p, g in zip(populations, generations):#zip([1000,3000,5000],[5000,3000,2000]):
     hyper_params.append({
         'population_size' : [p],
         'generations' : [g],
@@ -63,7 +63,8 @@ grid_est.fit(X_train, y_train)
 POPULATION_SIZE, N_GEN, PARS_COEFF, SEED = get_params_from_best_model(grid_est.best_params_,)
 save_gplearn_model_pkl(POPULATION_SIZE, N_GEN, SEED, PARS_COEFF, 
     grid_est.best_estimator_,
-    dataset_type='loan_type')
+    dataset_type='loan_type',
+    folder_path='/home/energy/pvifr/cred_anal/credit_risk_analysis/credit_card_default_results/trained_models')
 
 for pars_coeff in pars_coeffs:
     for hyper_param in hyper_params:
@@ -77,7 +78,8 @@ for pars_coeff in pars_coeffs:
 
     save_gplearn_model_pkl(POPULATION_SIZE, N_GEN, SEED, PARS_COEFF,
         grid_est.best_estimator_,
-        dataset_type='loan_type')
+        dataset_type='loan_type',
+	folder_path='/home/energy/pvifr/cred_anal/credit_risk_analysis/credit_card_default_results/trained_models')
     
 
 
